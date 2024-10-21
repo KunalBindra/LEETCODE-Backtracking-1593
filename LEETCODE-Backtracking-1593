@@ -1,0 +1,31 @@
+class Solution {
+    private void solve(String s,int idx,HashSet<String>st,int currcount,int[] maxcount)
+    {
+        if(currcount+(s.length()-idx)<=maxcount[0])
+        {
+            return;
+        }
+        if(idx==s.length())
+        {
+            maxcount[0]=Math.max(maxcount[0],currcount);
+            return;
+        }
+        for(int j=idx;j<s.length();j++)
+        {
+            String str=s.substring(idx,j+1);
+            if(!st.contains(str))
+            {
+                st.add(str);
+                solve(s,j+1,st,currcount+1,maxcount);
+                st.remove(str);
+            }
+        }
+
+    }
+    public int maxUniqueSplit(String s) {
+        HashSet<String> st=new HashSet<>();
+        int[] maxcount=new int[1];
+        solve(s,0,st,0,maxcount);
+        return maxcount[0];
+    }
+}
